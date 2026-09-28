@@ -3,19 +3,17 @@
 
 # GENERAL / SYSTEM / BLOAT
 DEBLOAT_APPS=(
-"HMT" "PaymentFramework" "DigitalWellbeing" "FactoryCameraFB"
-"WlanTest" "AirGlance" "AirReadingGlass" "AndroidGlassesCore"
-"SOAgent77" "ARCore" "ARDrawing" "ARZone" "BGMProvider"
-"SingleTakeService" "BixbyWakeup" "BlockchainBasicKit"
-"Cameralyzer" "DictDiotekForSec" "EasymodeContactsWidget81"
+"HMT" "FactoryCameraFB" "WlanTest" "AirGlance" "AirReadingGlass" 
+"AndroidGlassesCore" "SOAgent77" "ARCore" "ARDrawing" "ARZone"
+"SingleTakeService" "BlockchainBasicKit" "Cameralyzer" 
+"DictDiotekForSec" "EasymodeContactsWidget81"
 "Fast" "FunModeSDK" "GearManagerStub" "KidsHome_Installer"
 "LinkSharing_v11" "LiveDrawing" "MAPSAgent" "MdecService"
 "MinusOnePage" "MoccaMobile" "Netflix_stub" "Notes40"
 "ParentalCare" "PhotoTable" "SmartReminder" "SmartSwitchStub"
-"UnifiedWFC" "UniversalMDMClient" "VideoEditorLite_Dream_N"
-"VisionIntelligence3.7" "VoiceAccess" "VTCameraSetting"
+"UnifiedWFC" "UniversalMDMClient" "VoiceAccess" "VTCameraSetting"
 "WebManual" "WifiGuider" "AutomationTest_FB" "FactoryTestProvider"
-"StickerCenter" "CIDManager" "FacAtFunction" "serviceModeApp_FB"
+"CIDManager" "FacAtFunction" "serviceModeApp_FB"
 )
 
 
@@ -25,7 +23,7 @@ CARRIER_APPS=(
 "LGUMiniCustomerCenter" "LGUplusTsmProxy"
 "SKTMemberShip_new" "SktUsimService" "TWorld"
 "KT114Provider2" "KTHiddenMenu" "KTOneStore"
-"KTServiceAgent" "KTServiceMenu"
+"KTServiceAgent" "KTServiceMenu" "LGUIxio_Stub"
 "LGUGPSnWPS" "LGUHiddenMenu" "LGUOZStore"
 "SKTFindLostPhone" "SKTHiddenMenu" "SKTMemberShip"
 "SKTOneStore" "SKTFindLostPhoneApp"
@@ -39,22 +37,32 @@ SAMSUNG_APPS=(
 "SamsungCalendar" "SamsungTTS" "SamsungBilling"
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
 "SamsungPass" "SamsungSmartSuggestions"
-"SamsungPassAutofill_v1"
+"SamsungPassAutofill_v1" "WarrantyCare"
 "AirCommand" "AppUpdateCenter" "AREmoji"
 "AREmojiEditor" "AutoDoodle" "AvatarEmojiSticker"
 "AvatarEmojiSticker_S" "AvatarPicker"
 "GalleryWidget" "LiveStickers" "StoryService"
-"StickerFaceARAvatar" "sticker"
+"StickerFaceARAvatar" "sticker" "PaymentFramework"
+)
+
+
+# SAMSUNG DEX APPS
+SAMSUNG_DEX_APPS=("DeXonPC" "DesktopModeUiService" "KnoxDesktopLauncher"
+"SystemUIDesktop" "DexCommunity" "KnoxContainerDesktop"
+)
+
+
+# SAMSUNG BIXBY APPS
+SAMSUNG_BIXBY_APPS=(
+"BixbyWakeup" "BixbyInterpreter" "VisionIntelligence3.7" "Bixby" "BixbyService"
+"BixbyVisionFramework3.5" "SystemUIBixby2" "VisionModel-Stub" "SettingsBixby"
 )
 
 
 # SAMSUNG AI / SMART
 SAMSUNG_AI=(
-"LiveTranscribe" "Bixby" "BixbyInterpreter"
-"BixbyVisionFramework3.5" "SettingsBixby"
-"SmartEye" "SmartPush" "SmartPush_64"
-"SmartThingsKit" "SmartTouchCall"
-"VisionIntelligence3.7"
+"LiveTranscribe" "SmartEye" "SmartPush"
+"SmartPush_64" "SmartThingsKit" "SmartTouchCall"
 )
 
 
@@ -64,8 +72,8 @@ GOOGLE_APPS=(
 "AssistantShell" "BardShell" "DuoStub"
 "GoogleCalendarSyncAdapter" "AndroidDeveloperVerifier"
 "YourPhone_Stub" "AndroidAutoStub" "FamilyLinkParentalControls"
-"AndroidSystemIntelligence" "GoogleRestore"
-"SamsungMessages" "SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
+"AndroidSystemIntelligence" "GoogleRestore" "SamsungMessages"
+"SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
 )
 
 
@@ -77,8 +85,7 @@ FACEBOOK_APPS=(
 
 # DRIVERS
 HARDWARE_DRIVERS=(
-"DevGPUDriver-EX2200"
-"GameDriver-EX2100" "GameDriver-EX2200" "GameDriver-SM8150"
+"DevGPUDriver-EX2200" "GameDriver-EX2100" "GameDriver-EX2200" "GameDriver-SM8150"
 )
 
 
@@ -179,6 +186,50 @@ KICK() {
             fi
         done
     done
+}
+
+
+DEBLOAT_SAMSUNG_BIXBY_APPS() {
+    echo -e ""
+    if [ "$#" -ne 1 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_FIRM_DIR>"
+        return 1
+    fi
+
+	local EXTRACTED_FIRM_DIR="$1"
+
+	if [ ! -d "$EXTRACTED_FIRM_DIR/system" ]; then
+	    echo -e "No extracted firmware found."
+        return 1
+    fi
+
+    echo -e "Debloating samssung bixby apps."
+
+	# Debloat samsung bixby apps
+	echo "- Debloating apps."
+    KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_BIXBY_APPS[@]}"
+}
+
+
+DEBLOAT_SAMSUNG_DEX_APPS() {
+    echo -e ""
+    if [ "$#" -ne 1 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_FIRM_DIR>"
+        return 1
+    fi
+
+	local EXTRACTED_FIRM_DIR="$1"
+
+	if [ ! -d "$EXTRACTED_FIRM_DIR/system" ]; then
+	    echo -e "No extracted firmware found."
+        return 1
+    fi
+
+    echo -e "Debloating samssung dex apps."
+
+	# Debloat samsung dex apps
+	echo "- Debloating apps."
+    KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_DEX_APPS[@]}"
 }
 
 
