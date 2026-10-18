@@ -38,9 +38,9 @@ SAMSUNG_APPS=(
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
 "SamsungPass" "SamsungSmartSuggestions"
 "SamsungPassAutofill_v1" "WarrantyCare"
-"AirCommand" "AppUpdateCenter" "AREmoji"
+"AirCommand" "AppUpdateCenter" "AREmoji" "SketchBook"
 "AREmojiEditor" "AutoDoodle" "AvatarEmojiSticker"
-"AvatarEmojiSticker_S" "AvatarPicker"
+"AvatarEmojiSticker_S" "AvatarPicker" "GalaxyBetaService"
 "GalleryWidget" "LiveStickers" "StoryService"
 "StickerFaceARAvatar" "sticker" "PaymentFramework"
 )
@@ -204,7 +204,7 @@ DEBLOAT_SAMSUNG_BIXBY_APPS() {
         return 1
     fi
 
-    echo -e "Debloating samssung bixby apps."
+    echo -e "Debloating samsung bixby apps."
     KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_BIXBY_APPS[@]}"
 }
 
@@ -223,7 +223,7 @@ DEBLOAT_SAMSUNG_DEX_APPS() {
         return 1
     fi
 
-    echo -e "Debloating samssung dex apps."
+    echo -e "Debloating samsung dex apps."
     KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_DEX_APPS[@]}"
 }
 
